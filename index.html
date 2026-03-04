@@ -52,7 +52,7 @@
 
 <body class="bg-gray-50">
 
-    <div  class="">
+    <div class="">
         <button id="openBtn"
             class="bottom-10 fixed right-0 bg-gradient-to-br from-fuchsia-500 via-red-500 to-indigo-500 hover:bg-gray-900 rounded-full flex p-8 animate-bounce md:bottom-10 md:right-10">
             <i class="fa-solid fa-message text-white "></i>
@@ -99,7 +99,7 @@
                 </div>
 
                 <!-- Mobile Button -->
-                <button class="md:hidden text-gray-700" onclick="toggleMenu()">
+                <button id="menuBtn" class="md:hidden text-gray-700" onclick="toggleMenu()">
                     <i class="fas fa-bars text-3xl"></i>
                 </button>
             </div>
@@ -502,10 +502,19 @@
     <!-- Simple JavaScript -->
     <script>
         // Mobile menu toggle
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
+        const menu = document.getElementById('mobileMenu');
+        const menuBtn = document.getElementById('menuBtn');
+
+        menuBtn.addEventListener('click', function (e) {
+            e.stopPropagation(); // prevent this click from closing menu immediately
             menu.classList.toggle('hidden');
-        }
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
 
         // Close menu when clicking outside (optional)
         document.addEventListener('click', function (event) {
